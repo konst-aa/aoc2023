@@ -1,0 +1,4 @@
+**/out
+*.o
+*.import.scm
+*.c
