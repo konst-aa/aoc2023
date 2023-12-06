@@ -30,12 +30,12 @@
     0))
 
 (define (sol2 round-tuples)
-  (define (acc-fn acc item)
+  (define (fold-fn acc item)
     (list (cons 'red (max (getr acc) (getr item)))
           (cons 'green (max (getg acc) (getg item)))
           (cons 'blue (max (getb acc) (getb item)))))
   (let* ((init-acc (list (cons 'red 0) (cons 'blue 0) (cons 'green 0)))
-         (biggest (foldl acc-fn init-acc round-tuples)))
+         (biggest (foldl fold-fn init-acc round-tuples)))
     (* (getr biggest) (getg biggest) (getb biggest))))
 
 (define (driver acc)

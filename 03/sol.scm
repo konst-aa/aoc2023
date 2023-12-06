@@ -76,14 +76,15 @@
 
 (define gear-indices (find-indices gear?))
 
-(define sol2
-  (sum (map (lambda (rc)
-              (let ((neighbors (prune (nearby-numbers (car rc) (cdr rc)))))
-                (if (= (length neighbors) 2)
-                  (apply * (map row-col-list->number neighbors))
-                  0)))
-            gear-indices)))
+(define sol1 (sum (map row-col-list->number (prune sol1-row-cols))))
 
-(day-answers 3
-             (sum (map row-col-list->number (prune sol1-row-cols)))
-             sol2)
+(define (map-fn rc)
+  (let ((neighbors (prune (nearby-numbers (car rc) (cdr rc)))))
+    (if (= (length neighbors) 2)
+      (apply * (map row-col-list->number neighbors))
+      0)))
+
+(define sol2
+  (sum (map map-fn gear-indices)))
+
+(day-answers 3 sol1 sol2)

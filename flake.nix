@@ -13,10 +13,12 @@
         stdenv = pkgs.stdenv;
         eggs = pkgs.chickenPackages.chickenEggs;
         defaultBuildInputs = with eggs; [
+          pkgs.gnumake
           pkgs.chicken
           srfi-1
           srfi-113
           srfi-128
+          srfi-152
           vector-lib # clam 9
         ];
 
