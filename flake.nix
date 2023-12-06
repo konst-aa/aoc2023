@@ -5,24 +5,27 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable"; # i like to live life dangerously
   };
 
-  outputs = { self, nixpkgs }: {
+  outputs = { self, nixpkgs }:
+    let
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    in
+    {
+      formatter.x86_64-linux = pkgs.nixpkgs-fmt;
+      defaultPackage.x86_64-linux =
+        let
+          stdenv = pkgs.stdenv;
+          eggs = pkgs.chickenPackages.chickenEggs;
+          defaultBuildInputs = with eggs; [
+            pkgs.gnumake
+            pkgs.chicken
+            srfi-1 # list-lib
+            srfi-113 # sets
+            srfi-128 # comparators
+            srfi-152 # string-lib
+            vector-lib # clam 9
+          ];
 
-    defaultPackage.x86_64-linux =
-      let
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        stdenv = pkgs.stdenv;
-        eggs = pkgs.chickenPackages.chickenEggs;
-        defaultBuildInputs = with eggs; [
-          pkgs.gnumake
-          pkgs.chicken
-          srfi-1 # list-lib
-          srfi-113 # sets
-          srfi-128 # comparators
-          srfi-152 # string-lib
-          vector-lib # clam 9
-        ];
-
-      in
+        in
         pkgs.stdenv.mkDerivation {
           src = ./.;
 
@@ -33,5 +36,5 @@
           # '';
         };
 
-  };
+    };
 }
