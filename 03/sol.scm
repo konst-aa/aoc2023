@@ -5,11 +5,11 @@
         (srfi 113)
         (srfi 128))
 
-(define input-string (read-all (open-input-file "03/input.txt")))
-(define row-strings (string-split input-string "\n"))
+(define inp (read-all (open-input-file "03/input.txt")))
+(define rows (lines inp))
 
-(define row-length (string-length (car row-strings)))
-(define num-rows (length row-strings))
+(define row-length (string-length (car rows)))
+(define num-rows (length rows))
 
 (define rows
   (let* ((row-charlists (map string->list row-strings))

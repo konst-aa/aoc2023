@@ -44,9 +44,8 @@
       acc
       (let* ((acc1 (car acc))
              (acc2 (cdr acc))
-             (s1 (string-split line ":"))
-             (game-id (string->number (cadr (string-split (car s1) " "))))
-             (rounds (string-split (cadr s1) ";"))
+             (game-id (string->number (cadr (sp-split (pre-colon line)))))
+             (rounds (string-split (colon line) ";"))
              (round-tuples (map round-string->round-tuple rounds))
              (res1 (sol1 game-id round-tuples))
              (res2 (sol2 round-tuples)))

@@ -15,10 +15,10 @@
         defaultBuildInputs = with eggs; [
           pkgs.gnumake
           pkgs.chicken
-          srfi-1
-          srfi-113
-          srfi-128
-          srfi-152
+          srfi-1 # list-lib
+          srfi-113 # sets
+          srfi-128 # comparators
+          srfi-152 # string-lib
           vector-lib # clam 9
         ];
 

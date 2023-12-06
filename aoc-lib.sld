@@ -3,6 +3,13 @@
     make-box
     set-box!
     get-box
+    prune-empty
+    sp-split
+    sp-split-n
+    pre-colon
+    colon
+    lines
+    section
     range
     incl-range
     char->number
@@ -26,6 +33,8 @@
     define-curried)
 
   (import scheme
+          (srfi 1)
+          (srfi 152)
           vector-lib
           (chicken base)
           (chicken format)
@@ -37,13 +46,33 @@
     (print "p2: " p2)
     (newline))
 
-
   (define (make-box value)
     (list value))
   (define (set-box! box new-value)
     (set-car! box new-value))
   (define (get-box box)
     (car box))
+
+  (define (prune-empty str-lst)
+    (filter (lambda (s) (not (equal? s ""))) str-lst))
+
+  (define (sp-split str)
+    (prune-empty (string-split str " ")))
+
+  (define (sp-split-n str)
+    (map string->number (sp-split str)))
+
+  (define (pre-colon str)
+    (car (string-split str ":")))
+
+  (define (colon str)
+    (cadr (string-split str ":")))
+
+  (define (lines str)
+    (prune-empty (string-split str "\n")))
+
+  (define (section str)
+    (string-split str "\n\n"))
 
   (define (range n m step)
     (define (helper n acc)
@@ -93,7 +122,7 @@
     (foldl (lambda (a b) (or a b)) #f lst))
 
   (define (sum lst)
-    (apply + lst))
+    (foldl + 0 lst))
 
   (define (read-line port)
     (define (helper acc)

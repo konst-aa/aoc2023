@@ -5,17 +5,17 @@
         (srfi 113)
         (srfi 128))
 
-(define input-string (read-all (open-input-file "04/input.txt")))
-(define row-strings (string-split input-string "\n"))
+(define inp (read-all (open-input-file "04/input.txt")))
+(define rows (lines inp))
 
 (define (row->card row)
-  (let* ((relevant (cadr (string-split row ": ")))
-         (t (string-split row "|"))
-         (winning-numbers (map string->number (string-split (car t))))
-         (our-numbers (map string->number (string-split (cadr t)))))
+  (let* ((relevant (colon row))
+         (t (string-split relevant "|"))
+         (winning-numbers (sp-split-n (car t)))
+         (our-numbers (sp-split-n (cadr t))))
     (cons winning-numbers our-numbers)))
 
-(define cards (map row->card row-strings))
+(define cards (map row->card rows))
 
 (define comp (make-default-comparator))
 
@@ -33,7 +33,6 @@
         0
         (expt 2 (- item 1))))
     wins-vec))
-
 
 (define upper-bounds (vector-length points-vec))
 

@@ -2,23 +2,20 @@
         (srfi 1)
         (srfi 152))
 
-(define input-string (read-all (open-input-file "05/input.txt")))
+(define inp (read-all (open-input-file "05/input.txt")))
 
-(define sections (string-split input-string "\n\n"))
+(define sections (section inp))
 
-(define (prune-empty str-lst)
-  (filter (lambda (s) (not (equal? s ""))) str-lst))
 
 (define seeds
   (let* ((seeds-row (car sections))
-         (seeds-str (cadr (string-split seeds-row ":"))))
-    (map string->number
-         (prune-empty (string-split seeds-str " ")))))
+         (seeds-str (colon seeds-row)))
+    (sp-split-n seeds-str)))
 
 (set! sections (cdr sections))
 
 (define (build-map row)
-  (let* ((range-info (map string->number (string-split row " ")))
+  (let* ((range-info (sp-split-n row))
          (range-length (caddr range-info))
          (dest-start (car range-info))
          (source-start (cadr range-info))
