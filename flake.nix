@@ -21,6 +21,7 @@
             srfi-1 # list-lib
             srfi-113 # sets
             srfi-128 # comparators
+            srfi-132 # sorting
             srfi-152 # string-lib
             vector-lib # clam 9
           ];

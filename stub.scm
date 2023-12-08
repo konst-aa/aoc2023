@@ -3,6 +3,7 @@
         (srfi 1)   ; lists
         (srfi 113) ; sets
         (srfi 128) ; comparators
+        (srfi 132) ; sorting
         (srfi 152) ; string-lib
         )
 
