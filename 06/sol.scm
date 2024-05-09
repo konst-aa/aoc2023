@@ -2,7 +2,7 @@
         (srfi 152))
 
 (define inp (read-all (open-input-file "06/input.txt")))
-(define rows (lines input-string))
+(define rows (lines inp))
 (define tme (colon (car rows)))
 (define distance (colon (cadr rows)))
 

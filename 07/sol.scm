@@ -30,7 +30,7 @@
       (cons item n)
       acc))
   (let* ((jokers (bag-element-count hand-bag #\J))
-         (hand-bag (bag-remove (lambda (c) (eq? c #\J)) hand-bag))
+         (hand-bag (bag-remove (lambda (c) (equal? c #\J)) hand-bag))
          (highest (bag-fold-unique fold-fn (cons #\O 0) hand-bag))
          )
     (bag-increment! hand-bag (car highest) jokers)
@@ -39,16 +39,15 @@
 
 (define-curried (hand-type hand-bag->count-bag hand)
   (let* ((hand-bag (lst->bg hand))
-         (count-bag (hand-bag->count-bag hand-bag)))
+         (count-bag (hand-bag->count-bag hand-bag))
+         (n-of-a-kind? (lambda (n) (= (bag-element-count count-bag n) 1))))
     (cond
-      ((= (bag-element-count count-bag 5) 1) 6)
-      ((= (bag-element-count count-bag 4) 1) 5)
-      ((and (= (bag-element-count count-bag 3) 1)
-            (= (bag-element-count count-bag 2) 1))
-       4)
-      ((= (bag-element-count count-bag 3) 1) 3)
-      ((= (bag-element-count count-bag 2) 2) 2)
-      ((= (bag-element-count count-bag 2) 1) 1)
+      ((n-of-a-kind? 5) 6)
+      ((n-of-a-kind? 4) 5)
+      ((and (n-of-a-kind? 3) (n-of-a-kind? 2)) 4) ; full house
+      ((n-of-a-kind? 3) 3)
+      ((= (bag-element-count count-bag 2) 2) 2) ; two pair
+      ((n-of-a-kind? 2) 1)
       (else 0))))
 
 (define spec-mapping

@@ -7,8 +7,10 @@ do
     then
         exit 0
     fi
-    echo "Compiling day $day..."
-    make --silent compile day=$pday
-    echo "Done compiling, now running..."
-    ./out
+    # echo "Compiling day $day..."
+    # make --silent compile day=$pday
+    # echo "Done compiling, now running..."
+    # ./out
+    echo "running day $pday..."
+    csi aoc-lib.sld -s $pday/sol.scm
 done

@@ -94,10 +94,10 @@
 
   (define-syntax nd-get
     (syntax-rules ()
-                  ((_ vec i)
-                   (vector-ref vec i))
-                  ((_ vec i j ...)
-                   (nd-get (vector-ref vec i) j ...))))
+      ((_ vec i)
+       (vector-ref vec i))
+      ((_ vec i j ...)
+       (nd-get (vector-ref vec i) j ...))))
 
   (define (vector-apply fn vec)
     (apply fn (vector->list vec)))
@@ -164,16 +164,16 @@
 
   (define-syntax curried-lambda
     (syntax-rules ()
-                  ((_ () def ...)
-                   (begin def ...))
-                  ((_ (arg rest ...) def ...)
-                   (lambda (a1 . argl)
-                     (apply curry-apply
-                            (lambda (arg) (curried-lambda (rest ...) def ...))
-                            (cons a1 argl))))))
+      ((_ () def ...)
+       (begin def ...))
+      ((_ (arg rest ...) def ...)
+       (lambda (a1 . argl)
+         (apply curry-apply
+                (lambda (arg) (curried-lambda (rest ...) def ...))
+                (cons a1 argl))))))
 
   (define-syntax define-curried
     (syntax-rules ()
-                  ((_ (name args ...) impl ...)
-                   (define name (curried-lambda (args ...) impl ...)))))
+      ((_ (name args ...) impl ...)
+       (define name (curried-lambda (args ...) impl ...)))))
   )

@@ -12,7 +12,7 @@
 (define num-rows (length rows))
 
 (define rows
-  (let* ((row-charlists (map string->list row-strings))
+  (let* ((row-charlists (map string->list rows))
          (row-vectors (map (lambda (row) (apply vector row)) row-charlists)))
     (apply vector row-vectors)))
 
